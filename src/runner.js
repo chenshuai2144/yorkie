@@ -5,7 +5,7 @@ const execa = require('execa');
 const cwd = process.cwd();
 const pkg = fs.readFileSync(path.join(cwd, 'package.json'));
 const pkgJson = JSON.parse(pkg);
-const hooks = pkgJson.gitHooks;
+const hooks = pkgJson.gitHooks || {};
 if (pkgJson.scripts && pkgJson.scripts.precommit) {
   hooks['pre-commit'] = 'npm run precommit';
 }
