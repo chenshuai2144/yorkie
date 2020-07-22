@@ -1,5 +1,5 @@
 {
-  "name": "yorkie",
+  "name": "@umijs/yorkie",
   "version": "2.0.0",
   "description": "githooks management forked from husky",
   "engines": {
