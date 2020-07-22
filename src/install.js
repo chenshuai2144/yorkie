@@ -21,7 +21,7 @@ function write(filename, data) {
 
 function createHook(depDir, projectDir, hooksDir, hookName, runnerPath) {
   const filename = path.join(hooksDir, hookName);
-
+  console.log(depDir, projectDir, hooksDir, hookName, runnerPath);
   let packageDir;
   // prioritize package.json next to .git
   // this avoids double-install in lerna monorepos where both root and sub
@@ -77,10 +77,10 @@ function installFrom(depDir) {
     const projectDir = findParent(depDir, 'package.json');
     const hooksDir = findHooksDir(projectDir);
     const runnerPath = './node_modules/@umijs/yorkie/src/runner.js';
-
     if (hooksDir) {
       hooks
         .map(function(hookName) {
+          console.log(hookName, createHook(depDir, projectDir, hooksDir, hookName, runnerPath));
           return {
             hookName: hookName,
             action: createHook(depDir, projectDir, hooksDir, hookName, runnerPath),

@@ -1,8 +1,8 @@
-'use strict'
+'use strict';
 
-const normalize = require('normalize-path')
-const stripIndent = require('strip-indent')
-const pkg = require('../../package.json')
+const normalize = require('normalize-path');
+const stripIndent = require('strip-indent');
+const pkg = require('../../package.json');
 
 function platformSpecific() {
   // On OS X and Linux, try to use nvm if it's installed
@@ -15,11 +15,11 @@ function platformSpecific() {
       `
       # Node standard installation
       export PATH="$PATH:/c/Program Files/nodejs"`
-    )
+    );
   } else {
     // Using normalize to support ' in path
     // https://github.com/typicode/yorkie/issues/117
-    const home = normalize(process.env.HOME)
+    const home = normalize(process.env.HOME);
 
     return stripIndent(
       `
@@ -31,20 +31,20 @@ function platformSpecific() {
         # Try to load nvm using path of standard installation
         load_nvm ${home}/.nvm
         run_nvm`
-    )
+    );
 
-    return arr.join('\n')
+    return arr.join('\n');
   }
 }
 
 module.exports = function getHookScript(hookName, relativePath, runnerPath) {
   // On Windows normalize path (i.e. convert \ to /)
-  const normalizedPath = normalize(relativePath)
+  const normalizedPath = normalize(relativePath);
 
   const noVerifyMessage =
     hookName === 'prepare-commit-msg'
       ? '(cannot be bypassed with --no-verify due to Git specs)'
-      : '(add --no-verify to bypass)'
+      : '(add --no-verify to bypass)';
 
   return [
     stripIndent(
@@ -57,6 +57,9 @@ module.exports = function getHookScript(hookName, relativePath, runnerPath) {
       }
 
       has_hook_script () {
+        if [ $1 == 'pre-commit' ];then 
+          return 0 
+        fi
         [ -f package.json ] && cat package.json | grep -q "\\"$1\\"[[:space:]]*:"
       }
 
@@ -95,6 +98,6 @@ module.exports = function getHookScript(hookName, relativePath, runnerPath) {
         exit 1
       }
       `
-    )
-  ].join('\n')
-}
+    ),
+  ].join('\n');
+};

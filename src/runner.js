@@ -6,7 +6,7 @@ const cwd = process.cwd();
 const pkg = fs.readFileSync(path.join(cwd, 'package.json'));
 const pkgJson = JSON.parse(pkg);
 const hooks = pkgJson.gitHooks;
-if (pkg.scripts && pkg.scripts.precommit) {
+if (pkgJson.scripts && pkgJson.scripts.precommit) {
   hooks['pre-commit'] = 'npm run precommit';
 }
 if (!hooks) {
